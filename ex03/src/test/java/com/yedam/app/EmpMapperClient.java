@@ -1,5 +1,6 @@
 package com.yedam.app;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -27,5 +28,15 @@ public class EmpMapperClient {
 		List<EmpVO> empList = empMapper.selectEmpAllList();
 		//데이터가 넘어온다면 List가 비어있지 않을 것 -> empList.isEmpty() => false 
 		assertTrue(!empList.isEmpty());
+	}
+	
+	@Test
+	public void selectEmpInfo() {
+		//단건 조회
+		EmpVO empVO = new EmpVO();
+		empVO.setEmployeeId(100);
+		
+		EmpVO findVO = empMapper.selectEmpInfo(empVO);
+		assertEquals(findVO.getLastName(), "King");
 	}
 }

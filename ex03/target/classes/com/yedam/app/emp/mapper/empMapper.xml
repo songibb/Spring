@@ -13,36 +13,36 @@
 		<!-- 테이블의 컬럼명을 약어로 축약할 때 최소 영어 두글자 이상을 축약시켜야 mybatis가 제대로 인식할 수 있음 -->
 		<!-- ex) c_id => cId로 인식해야하는데, getCID => cid로 인식해버림 -->
 		SELECT employee_id,
-		first_name,
-		last_name,
-		email,
-		phone_number,
-		hire_date,
-		job_id,
-		salary,
-		commission_pct,
-		manager_id,
-		department_id
-		FROM employees
-		ORDER BY employee_id
+			   first_name,
+			   last_name,
+			   email,
+			   phone_number,
+			   hire_date,
+			   job_id,
+			   salary,
+			   commission_pct,
+			   manager_id,
+			   department_id
+		  FROM employees
+	  ORDER BY employee_id
 	</select>
 
 
 	<!-- 단건 조회 -->
 	<select id="selectEmpInfo" resultType="EmpVO">
 		SELECT employee_id,
-		first_name,
-		last_name,
-		email,
-		phone_number,
-		hire_date,
-		job_id,
-		salary,
-		commission_pct,
-		manager_id,
-		department_id
-		FROM employees
-		WHERE employee_id = #{ employeeId }  <!-- 단건조회는 값이 안넘어오는 건 상관없지만 둘 이상 넘어오면 안됨 
+			   first_name,
+			   last_name,
+			   email,
+			   phone_number,
+			   hire_date,
+			   job_id,
+			   salary,
+			   commission_pct,
+			   manager_id,
+			   department_id
+		  FROM employees
+		 WHERE employee_id = #{ employeeId }  <!-- 단건조회는 값이 안넘어오는 건 상관없지만 둘 이상 넘어오면 안됨 
 			-> where 조건 이용 (가능하다면 primary key 이용하도록) -->
 		<!-- #{} : PreparedStatement 0 => 0, Kang => 'Kang' -->   <!-- 값을 넘길때는 반드시 #{}을 이용 -->
 		<!-- ${} : Statement 0 => 0, Kang => Kang -->   <!-- 간혹 값이 변동될때는 ${}를 이용 ex)검색할때 -->
@@ -59,40 +59,40 @@
 			<!-- keyProperty에는 parameterType에 있는 필드 값 중 하나, resultType에는 그 필드의 type -->
 			<!-- order -> insert시키기 전에 select를 실행하면 before, 후에 실행하면 after -->
 			SELECT NVL(MAX(employee_id),0) + 1
-			FROM employees
+			  FROM employees
 		</selectKey>
 		INSERT INTO employees
-		(
-		employee_id
-		, first_name
-		, last_name
-		, email
-		, hire_date
-		, job_id
-		, salary
-		)
-		VALUES (
-		#{employeeId}
-		, #{firstName}
-		, #{lastName}
-		, #{email}
-		<!-- <if test="hireDate != null"> -->
-		<!-- , #{hireDate} -->
-		<!-- </if> -->
-		<!-- <if test="hireDate == null"> -->
-		<!-- , sysdate -->
-		<!-- </if> -->
-		<choose>
-			<when test="hireDate != null">
-				, #{hireDate}
-			</when>
-			<otherwise>
-				, sysdate
-			</otherwise>
-		</choose>
-		, #{jobId}
-		, #{salary}
-		)
+				   (
+					 employee_id
+					 , first_name
+					 , last_name
+					 , email
+					 , hire_date
+					 , job_id
+					 , salary
+				   )
+			 VALUES (
+					 #{employeeId}
+					 , #{firstName}
+					 , #{lastName}
+					 , #{email}
+				<!-- <if test="hireDate != null"> -->
+				<!-- , #{hireDate} -->
+				<!-- </if> -->
+				<!-- <if test="hireDate == null"> -->
+				<!-- , sysdate -->
+				<!-- </if> -->
+					 <choose>
+						<when test="hireDate != null">
+							, #{hireDate}
+						</when>
+						<otherwise>
+							, sysdate
+						</otherwise>
+					 </choose>
+					, #{jobId}
+					, #{salary}
+				   )
 	</insert>
 
 
@@ -100,9 +100,9 @@
 	<!-- @Param()에서 지정한 이름을 사용하면 됨 -->
 	<update id="updateEmpSal">
 		UPDATE employees
-		SET salary = salary * (1 + #{raise} / 100)
-		<!-- WHERE employee_id = #{empId} -->
-		WHERE employee_id = #{emp.employeeId}
+		   SET salary = salary * (1 + #{raise} / 100)
+	<!-- WHERE employee_id = #{empId} -->
+		 WHERE employee_id = #{emp.employeeId}
 	</update>
 
 
@@ -112,7 +112,7 @@
 	<update id="updateEmpInfo" parameterType="EmpVO">
 		UPDATE employees
 		<set>
-			<if test="firstName != null and !firstName.equals('')"> <!-- text문 안에는 sql문 사용 X- > 자바역영이라서 -->
+			<if test="firstName != null and !firstName.equals('')"> <!-- text문 안에는 sql문 사용 X -> 자바영역이라서 -->
 				first_name = #{firstName},
 			</if>
 			<if test="email != null and !email.equals('')">
@@ -122,7 +122,7 @@
 				salary = #{salary},
 			</if>
 		</set>
-		WHERE employee_id = #{employeeId}
+		 WHERE employee_id = #{employeeId}
 
 	</update>
 
@@ -130,6 +130,6 @@
 	<!-- parameterType 값이 하나일때는 #{}변수 이름을 줄여도 상관없음 -->
 	<delete id="deleteEmpInfo" parameterType="int">
 		DELETE FROM employees
-		WHERE emloyee_id = #{empId}
+		 WHERE emloyee_id = #{empId}
 	</delete>
 </mapper>
