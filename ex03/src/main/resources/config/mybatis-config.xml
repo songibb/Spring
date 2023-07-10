@@ -2,4 +2,21 @@
 <!DOCTYPE configuration
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
- 
+<configuration>
+	<settings>
+		<!-- DB의 언더바를 카멜케이스로 자동 바꾸기 -->
+		<setting name="mapUnderscoreToCamelCase" value="true"/> 
+		<!-- 결과로 넘어온 null에 대한 처리 (문자로 인식시키고 싶다면 value="VARCHAR") -->
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	
+	<typeAliases>
+		<!-- alias를 쓰는 경우에는 클래스 이름이 반드시 다 달라야 충돌이 일어나지 않고 mybatis가 잘 찾음 (패키지가 달라도 클래스 이름 다르게 해야함)-->
+		<package name="com.yedam.app"/>
+	</typeAliases>
+	
+	<typeHandlers>
+		<!-- java.sql.Date -> java.util.Date로 변환 -->
+		<typeHandler javaType="java.sql.Date" handler="org.apache.ibatis.type.DateTypeHandler"/>
+	</typeHandlers>
+</configuration>
