@@ -12,22 +12,25 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
+
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-
-
+	<!-- location => 물리적인 위치 (끝에 / 반드시 붙여줘여 하위폴더를 매핑할 수 있다) -->
 	<resources mapping="/resources/**" location="/resources/" />
 	<!-- <resources mapping="/files/**" location="/resources/files/" />   이런식으로도 사용 가능 -->   
-	<!-- location => 물리적인 위치 (끝에 / 반드시 붙여줘여 하위폴더를 매핑할 수 있다) -->
+	
 	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<!-- resolve는 대체 될 수 있음 -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.yedam.app" />
+	
 	<!-- bean을 등록하는 가장 기본적인 scan -> base-package밑에 있는 모든 bean을 등록 -->
 	<!-- 경우에 따라 bean 등록에 충돌이 일어나면 필터를 걸어줌 -->
+	<context:component-scan base-package="com.yedam.app" />
+	
 	
 	
 	

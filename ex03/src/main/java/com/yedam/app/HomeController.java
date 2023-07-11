@@ -23,7 +23,7 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Locale locale, Model model) {  //Locale -> spring에서 자체적으로 local에 대한 기본정보를 받아옴  //model을 쓴다는 것은 돌려줄 데이터가 있다는 것. (단순 파싱만 하는 경우엔 안씀)
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		Date date = new Date();
@@ -33,7 +33,7 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "home";
+		return "home";   //페이지 이름을 돌려줌
 	}
 	
 }

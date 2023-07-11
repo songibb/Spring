@@ -24,7 +24,7 @@
 			   manager_id,
 			   department_id
 		  FROM employees
-	  ORDER BY employee_id
+	  ORDER BY employee_id DESC
 	</select>
 
 
@@ -54,10 +54,9 @@
 	<!-- insert와 update하기 전에 selectkey 많이 사용 -->
 	<insert id="insertEmpInfo" parameterType="EmpVO">
 		<!-- select문을 간단하게 이용해서 primary key로 사용. parameterType에 담김 -->
-		<selectKey keyProperty="employeeId" resultType="int"
-			order="BEFORE">
-			<!-- keyProperty에는 parameterType에 있는 필드 값 중 하나, resultType에는 그 필드의 type -->
-			<!-- order -> insert시키기 전에 select를 실행하면 before, 후에 실행하면 after -->
+		<selectKey keyProperty="employeeId" resultType="int" order="BEFORE">
+			<!-- keyProperty에는 parameterType에 있는 필드명 중 하나, resultType에는 그 필드의 type -->
+			<!-- order => insert시키기 전에 select를 실행하면 before, 후에 실행하면 after -->
 			SELECT NVL(MAX(employee_id),0) + 1
 			  FROM employees
 		</selectKey>
@@ -111,6 +110,7 @@
 	<!-- 2) Mybatis -> Dynamic SQL 사용 -->
 	<update id="updateEmpInfo" parameterType="EmpVO">
 		UPDATE employees
+		<!-- set과 if가 함께 쓰이면 마지막 ,(콤마)는 알아서 처리해줌 -->
 		<set>
 			<if test="firstName != null and !firstName.equals('')"> <!-- text문 안에는 sql문 사용 X -> 자바영역이라서 -->
 				first_name = #{firstName},
@@ -118,18 +118,17 @@
 			<if test="email != null and !email.equals('')">
 				email = #{email},
 			</if>
-			<if test="salary > 0"> <!-- int, double, long, short, char -> null값 가질 수 없음 -->
+			<if test="salary > 0"> <!-- int, double, long, short, char -> 기본타입의 초기값은 null값이 아님-->
 				salary = #{salary},
 			</if>
 		</set>
 		 WHERE employee_id = #{employeeId}
-
 	</update>
 
 	<!-- 삭제 -->
 	<!-- parameterType 값이 하나일때는 #{}변수 이름을 줄여도 상관없음 -->
 	<delete id="deleteEmpInfo" parameterType="int">
 		DELETE FROM employees
-		 WHERE emloyee_id = #{empId}
+		 WHERE employee_id = #{empId}
 	</delete>
 </mapper>
