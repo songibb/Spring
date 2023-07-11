@@ -8,7 +8,6 @@
 	<!-- 전체 조회에서는 반드시 order by 넣어 줄 것 -->
 	<!-- select는 parameterType 생략 가능 -->
 	<!-- * 보다는 전체 컬럼명을 입력하고, 한행씩 내려서 쓰기 -->
-
 	<select id="selectEmpAllList" resultType="EmpVO">
 		<!-- 테이블의 컬럼명을 약어로 축약할 때 최소 영어 두글자 이상을 축약시켜야 mybatis가 제대로 인식할 수 있음 -->
 		<!-- ex) c_id => cId로 인식해야하는데, getCID => cid로 인식해버림 -->

@@ -48,7 +48,7 @@ table, th, td {
 		</tbody>
 	</table>
 	<script>
-		//자바스크립트에서 el태그 사용시 ''안에 쓸 것
+		//자바스크립트에서 el태그 사용시 ``안에 쓸 것
 		printMessage(`${result}`);
 		
 		function printMessage(msg){

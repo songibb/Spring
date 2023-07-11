@@ -7,7 +7,7 @@
 <title>사원조회</title>
 </head>
 <body>
-	<form action="">
+	<form>
 		<div>
 			<!-- input태그의 name속성은 사원 정보 수정시에 server에서 값을 받을때 key값으로 이용, 단건 조회시에는 사실상 필요없음 -->
 			<label>id : <input type="number" name="" value="${empInfo.employeeId}"></label>

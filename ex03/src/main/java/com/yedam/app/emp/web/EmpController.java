@@ -28,7 +28,7 @@ public class EmpController {
 	public String getEmpAllList(Model model) {  //받는 건 없고, 보내줄 건 있음 -> Model model
 		model.addAttribute("empList", empService.getEmpAll()); 
 		return "emp/empList";
-		//servlet-context.xml에 view resolve가 경로 앞뒤로 붇여줌 => 실제 경로 '/WEB-INF/views/emp/empList.jsp'
+		//servlet-context.xml에 view resolve가 경로 앞뒤로 붇여'줌 => 실제 경로 '/WEB-INF/views/emp/empList.jsp'
 	}
 	
 	//단건 조회
@@ -56,7 +56,7 @@ public class EmpController {
 			result = "정상적으로 등록되지 않았습니다.";
 		} else {
 			result = "정상적으로 등록되었습니다."
-					+ "\n 등록된 사원의 사번은 " + empId + "입니다.";
+					+ "\n등록된 사원의 사번은 " + empId + "입니다.";
 		}
 		
 		rtt.addFlashAttribute("result", result);  //redirect하더라도 그 값이 살아있음
