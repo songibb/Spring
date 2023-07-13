@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>전체조회</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <style type="text/css">
 table, th, td {
 	border : 1px solid black;
@@ -48,13 +49,42 @@ table, th, td {
 		</tbody>
 	</table>
 	<script>
-		//자바스크립트에서 el태그 사용시 ``안에 쓸 것
-		printMessage(`${result}`);
+		//redirect시 동작		
+		printMessage(`${result}`);      //자바스크립트에서 el태그 사용시 ``안에 쓸 것
 		
 		function printMessage(msg){
 			if(msg == null || msg == '') return;
 			alert(msg);
 		}
+		
+		
+		//삭제
+		$('button:contains("삭제")').on('click', ajaxDeleteEmp);     //contains -> 제이쿼리에서만 사용가능
+		 
+		function ajaxDeleteEmp(e){
+			let empId = e.currentTarget.closest('tr').firstElementChild.textContent;
+			
+			$.ajax({
+				url : 'empDelete',
+				type : 'post',
+				data : { id : empId }    //json타입을 제외하고는 무조건 객체타입 -> controller의 RequestParam에 name속성으로 이름을 지정했을시 그 이름이 key값
+			})
+			.done( data => {
+				if(data == 'Success'){
+					//삭제시 reload하지 않고 해당 태그 삭제하는 방법
+					let btn = e.currentTarget;
+					$(btn).closest('tr').remove();
+				} else{
+					alert('삭제되지 않았습니다.');
+				}
+			})
+			.fail( reject => console.log(reject));
+			
+			//button -> 이벤트 버블링 막아야함
+			//e.stopPropagation();   
+			return false;   //제이쿼리에서는 return false사용 가능
+		}
+		
 	</script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.yedam.app.dept.service;
 
 import java.util.List;
+import java.util.Map;
 
 public interface DeptService {
 	//전체 조회
@@ -11,4 +12,10 @@ public interface DeptService {
 	
 	//등록
 	public int insertDept(DeptVO deptVO);
+	
+	//수정 - 부서 정보 수정
+	public Map<String, String> updateDept(DeptVO deptVO);
+	
+	//삭제
+	public Map<String, String> deleteDept(int deptId);
 }

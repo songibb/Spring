@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!-- namespace는 mapper.xml과 인터페이스(*Mapper.java)를 연결함 -> 인터페이스 full name을 입력 -->
 <mapper namespace="com.yedam.app.emp.mapper.EmpMapper">
 	<!-- 전체 조회 -->
 	<!-- 전체 조회에서는 반드시 order by 넣어 줄 것 -->

@@ -13,4 +13,10 @@ public interface DeptMapper {
 	
 	//부서 등록
 	public int insertDeptInfo(DeptVO deptVO);
+	
+	//부서 수정
+	public int updateDeptInfo(DeptVO deptVO);
+	
+	//부서 삭제  
+	public int deleteDeptInfo(int departmentId);
 }

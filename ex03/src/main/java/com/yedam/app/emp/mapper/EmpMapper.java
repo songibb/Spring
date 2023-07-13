@@ -26,5 +26,6 @@ public interface EmpMapper {
 	public int updateEmpInfo(EmpVO empVO);
 	
 	//삭제
+	//삭제는 primary key 외에는 매겨변수 사용안하는 것이 좋음
 	public int deleteEmpInfo(int employeeId);
 }

@@ -1,6 +1,8 @@
 package com.yedam.app.dept.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,39 @@ public class DeptServiceImpl implements DeptService {
 		} else {
 			return -1;
 		}
+	}
+
+	@Override
+	public Map<String, String> updateDept(DeptVO deptVO) {
+		Map<String, String> map = new HashMap<>();
+		
+		map.put("부서번호", String.valueOf(deptVO.getDepartmentId()));
+		
+		int result = deptMapper.updateDeptInfo(deptVO);
+		
+		if(result > 0) {
+			map.put("결과", "성공");
+		} else {
+			map.put("결과", "실패");
+		}
+		return map;
+	}
+
+	@Override
+	public Map<String, String> deleteDept(int deptId) {
+		Map<String, String> map = new HashMap<>();
+		
+		map.put("부서번호", String.valueOf(deptId));
+		
+		int result = deptMapper.deleteDeptInfo(deptId);
+		
+		if(result > 0) {
+			map.put("결과", "성공");
+		} else {
+			map.put("결과", "실패");
+		}
+		
+		return map;
 	}
 
 }

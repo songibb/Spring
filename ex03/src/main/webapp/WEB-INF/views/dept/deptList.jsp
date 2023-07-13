@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>전체 부서 조회</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <style type="text/css">
 table, th, td {
 	border : 1px solid black;
@@ -21,6 +22,7 @@ table, th, td {
 				<th>department_name</th>
 				<th>manager_id</th>
 				<th>location_id</th>
+				<th>Del</th>
 			</tr>
 		</thead>	
 		<tbody>
@@ -36,12 +38,35 @@ table, th, td {
 		</tbody>
 	</table>
 	<script>
-		printMessage(`${result}`);
+		//redirect시 동작
+		let msg = `${result}`;
+		if(msg != null && msg != '') alert(msg);
+
 		
-		function printMessage(msg){
-			if(msg == null || msg == '') return;
-			alert(msg);
+		//삭제
+		$('tbody > tr button[type="button"]').on('click', ajaxDeleteDept);
+		
+		function ajaxDeleteDept(e){
+			let deptId = $(e.currentTarget).parent().siblings().eq(0).text();
+			
+			$.ajax({
+				url : 'deptDelete',
+				type : 'post',
+				data : { departmentId : deptId }   //controller에서 RequestParam에 별도 이름을 지정하지 않으면, 매개변수 이름이 key값
+			})
+			.done( data => {
+				if(data == '성공'){
+					let btn = e.currentTarget;
+					$(e.currentTarget).parent().parent().remove();
+				} else{
+					alert('삭제되지 않았습니다.');
+				}
+			})
+			.fail( reject => console.log(reject));
+			
+			return false;
 		}
+		
 	</script>
 	
 </body>

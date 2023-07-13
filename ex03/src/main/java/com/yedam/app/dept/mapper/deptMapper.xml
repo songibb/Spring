@@ -25,7 +25,7 @@
 		 WHERE department_id = #{departmentId}
 	</select>
 	
-	<!-- 등록 -->
+	<!-- 등록 --> <!--java 타입 중요 -->
 	<insert id="insertDeptInfo" parameterType="DeptVO">
 		<selectKey keyProperty="departmentId" resultType="int" order="BEFORE">
 			SELECT NVL(MAX(department_id),0) + 10
@@ -35,14 +35,46 @@
 					(
 					  department_id
 					  , department_name
+					  <if test="managerId != null and managerId > 0">
 					  , manager_id
+					  </if>
+					  <if test="locationId != null and locationId > 0">
 					  , location_id
+					  </if>
 					)
 			 VALUES (
-					 #{departmentId}
-					 , #{departmentName}
-					 , #{managerId}
-					 , #{locationId}
+					  #{departmentId}
+					  , #{departmentName}
+					   <if test="managerId != null and managerId > 0">	 <!-- Integer : 객체면서 정수 -->		   
+					  , #{managerId}
+ 					  </if>													
+					  <if test="locationId != null and locationId > 0">   
+					  , #{locationId}
+					  </if>
 					)
 	</insert>
+	
+	<!-- 수정 -->
+	<update id="updateDeptInfo" parameterType="DeptVO">
+		UPDATE departments
+		<set>
+			<if test="departmentName != null and !departmentName.equals('')">
+				department_name = #{departmentName},
+			</if>
+			<if test="managerId != null and managerId > 0">
+				manager_id = #{managerId},
+			</if>
+			<if test="locationId != null and locationId > 0">
+				location_id = #{locationId},
+			</if>
+		<!-- update문에서 set절은 필수 이므로 문법적으로 오류가 날 수 있으니 주의! -->
+		</set>
+		 WHERE department_id = #{departmentId}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="deleteDeptInfo" parameterType="int">
+		DELETE FROM departments
+		 WHERE department_id = #{deptId}
+	</delete>
 </mapper>

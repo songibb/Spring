@@ -26,7 +26,7 @@
 			<label>salary : <input type="number" name="salary"></label>
 		</div>
 		<button type="submit">등록</button>
-		<button type="button">목록</button>
+		<button type="button" onclick="location.href='empList'">목록</button>
 	</form>
 </body>
 </html>
