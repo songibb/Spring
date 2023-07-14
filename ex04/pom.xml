@@ -4,8 +4,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.yedam</groupId>
-	<artifactId>app</artifactId>
-	<name>ex03</name>
+	<artifactId>web</artifactId>
+	<name>ex04</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
@@ -140,19 +140,20 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- jackson : 스프링에서 자동으로 생성해서 빈에 등록됨 -->
+		<!-- jackson -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.13.2.2</version>
 		</dependency>
 
-		<!-- Database Connect -->
+
+		<!-- DB connect -->
 		<!-- ojdbc8 -->
 		<dependency>
 			<groupId>com.oracle.database.jdbc</groupId>
 			<artifactId>ojdbc8</artifactId>
-			<version>21.3.0.0</version>
+			<version>19.3.0.0</version>
 		</dependency>
 
 		<!-- spring-jdbc -->
@@ -163,15 +164,13 @@
 		</dependency>
 
 		<!-- Database connection pool -->
-		<!-- 기본적으로 10개의 connection을 잡고 있음-> 통신의 부담을 줄임 (셋팅할때 디폴트 맥시멈 수 10개에서 숫자를 
-			줄여야 함 -> DB가 죽는 경우가 생김) -->
 		<dependency>
 			<groupId>com.zaxxer</groupId>
 			<artifactId>HikariCP</artifactId>
 			<version>5.0.1</version>
 		</dependency>
 
-		<!-- Mybatis Setting -->
+
 		<!-- mybatis -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
@@ -184,7 +183,7 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>2.0.6</version>
 		</dependency>
-
+		
 		<!-- tiles Setting -->
 		<dependency>
 			<groupId>org.apache.tiles</groupId>
@@ -201,6 +200,7 @@
 			<artifactId>tiles-jsp</artifactId>
 			<version>3.0.8</version>
 		</dependency>
+
 
 	</dependencies>
 	<build>

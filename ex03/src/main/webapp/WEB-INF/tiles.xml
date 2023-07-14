@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- layout.jsp는 골격으로 사용 -> 미완성 상태로 정의를 끝내기 -> 바로 호출되면 안됨 -->
+	<definition name="mainTemplate" template="/WEB-INF/views/tiles/layout.jsp">  <!-- 2) template 경로에 가서 tiles태그만 찾아서 거기에 put-attribute 속성을 찾아 넣음 -->
+		<put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" /> 		
+		<put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp" />
+	</definition>
+	
+	<!--  viewResolver controller가 어느 defininition의 name 인지 확인 -->
+	<definition name="*/*" extends="mainTemplate">  <!-- 1) extends -> 위의 definition 중 하나를 상속받음 -> mainTemplate을 찾음 -->
+  		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />   <!-- 변수 통해서 동적으로 넘어오는 데이터에 적용 -->
+    </definition>
+    
+	<!-- home처럼 정해진 파일은 굳이 *쓸 필요 없음 -->
+	<!-- name이 위의 구조와 달라서 위의 definition 보다 아래에 있어도 상관없음 -->
+    <definition name="home" extends="mainTemplate">
+    	<put-attribute name="content" value="/WEB-INF/views/home.jsp" />
+		<!-- 만약 다른 jsp를 적용 하고 싶다면 덮어써도 됨 -->
+		<!-- <put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp" /> -->
+    </definition>
+    
+	<!-- tiles 위에서부터 찾아감 -> 순서가 매우 중요 -> /기반으로 두단어 찾아가기때문에 위에 */* 에 걸려서 실행 절대 안됨 -->
+	<!-- book/*이 */*보다 위에 있으면 실행 됨 -> *사용시에는 마지막에 있도록 해야함 -->
+<!--     <definition name="book/*" extends="mainTemplate"> -->
+<!--   		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />    -->
+<!--   		<put-attribute name="footer" value="/WEB-INF/views/tiles/book_footer.jsp" /> -->
+<!--     </definition> -->
+</tiles-definitions>

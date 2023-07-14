@@ -9,8 +9,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
-	<context:property-placeholder
-		location="classpath:config/db.properties" />
+	<context:property-placeholder location="classpath:config/db.properties" />
 
 	<!-- datasource connection pool -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
@@ -19,34 +18,32 @@
 		<property name="username" value="${user}" />
 		<property name="password" value="${pwd}" />
 	</bean>
-	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
-		destroy-method="close">
+
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<constructor-arg ref="hikariConfig" />
 	</bean>
-	
+
 
 	<!-- mybatis SqlSessionFactory -->
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="configLocation" value="classpath:config/mybatis-config.xml" />
-
-		<!-- mapperLocations를 이용하면 mapper와 인터페이스의 이름이 달라도 서로 매핑 가능해짐 -->
-		<!-- 여러 파일을 동시에 정확하게 읽어들이려면 classpath* 이렇게 작성 -->
-		<property name="mapperLocations" value="classpath*:com/yedam/app/**/mapper/*Mapper.xml" />
-
+		<property name="configLocation"
+			value="classpath:config/mybatis-config.xml" />
+		<property name="mapperLocations"
+			value="classpath*:com/yedam/web/**/mapper/*Mapper.xml" />
 	</bean>
 
 	<!-- mapper scan -->
-	<mybatis-spring:scan
-		base-package="com.yedam.app.**.mapper" />
+	<mybatis-spring:scan base-package="com.company.**.mapper" />
 
 
 	<!-- TransactionManager bean 등록 -->
-	<bean id="transactionManager"
+	<bean id="txManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
 	<!-- @Transactional 어노테이션 처리 -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
+
 </beans>
