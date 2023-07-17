@@ -34,7 +34,7 @@
 	</bean>
 
 	<!-- mapper scan -->
-	<mybatis-spring:scan base-package="com.company.**.mapper" />
+	<mybatis-spring:scan base-package="com.yedam.web.**.mapper" />
 
 
 	<!-- TransactionManager bean 등록 -->

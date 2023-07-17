@@ -19,6 +19,7 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="2" />	
 	</beans:bean>
 	
 	
@@ -36,5 +37,5 @@
 		<beans:property name="order" value="1" />	
 	</beans:bean>
 	
-		<context:component-scan base-package="com.yedam.web" />
+	<context:component-scan base-package="com.yedam.web" />
 </beans:beans>
