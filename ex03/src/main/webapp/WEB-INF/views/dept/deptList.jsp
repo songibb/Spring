@@ -69,5 +69,44 @@ table, th, td {
 		
 	</script>
 	
+	
+	<!-- 토스트그리드 실험용 -->
+	<div id="grid"></div>
+	
+	<script>
+		window.onload = function(){
+			$.ajax({
+		        url : "/app/toastList",
+		        method :"GET",
+		        success : function(result){
+		            grid.resetData(result);
+		        } 
+			});
+			
+		    var grid = new tui.Grid({
+		        el: document.getElementById('grid'),
+		        scrollX: false,
+		        scrollY: false,
+		        columns: [
+		          {
+		            header: 'departmentId',
+		            name: 'departmentId',
+		          },
+		          {
+		            header: 'departmentName',
+		            name: 'departmentName',
+		          },
+		          {
+		            header: 'managerId',
+		            name: 'managerId'
+		          },
+		          {
+		            header: 'locationId',
+		            name: 'locationId'
+		          }		          
+		        ]
+		      })  
+		}
+	</script>
 </body>
 </html>

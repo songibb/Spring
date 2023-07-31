@@ -1,5 +1,6 @@
 package com.yedam.app.dept.web;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +73,15 @@ public class DeptController {
 	public String deptDeleteProcess(@RequestParam int departmentId) {
 		Map<String, String> map = deptService.deleteDept(departmentId);
 		return map.get("결과");
+	}
+	
+	
+	//toast grid 실험용
+	@GetMapping("/toastList")
+	@ResponseBody
+	public List<DeptVO> getToastList() {
+		List<DeptVO> list = deptService.getDeptAll();
+		return list;
 	}
 }
 
