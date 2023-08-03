@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.2.xsd">
+	
+	<!-- security가 적용되지 않을 경우 ex)메인페이지 -->
+	<!-- 메인페이지의css는 인증상관없이 보여져야하므로 따로 둠-->
+	<security:http pattern="/css/**" security="none" />
+	
+	<!-- security가 적용될 경우 -->
+	<security:http>
+		<!-- access제어하는 method -->
+		<!-- permitAll() -> 인증상관없이 모든 사용자 접근가능 -->
+		<!-- hasAuthority() -> 특정 권한을 가진 사용만 접근가능. 여러 권한 동시에 넣을 수 있음 -->
+		<!-- isAuthenticated() -> 인증한 사람만 접근가능 -->
+		<security:intercept-url pattern="/top.jsp" access="permitAll()" />
+		<security:intercept-url pattern="/admin/**"	access="hasAuthority('ROLE_ADMIN')" />	
+		<security:intercept-url pattern="/**" access="isAuthenticated()" />
+		
+		<!-- 로그인을 처리하는 모든 것을 security에 전임 / 어떤 controller를 통해서 로그인할지도 지정 --> 
+		<!--default-target-url -> 로그인 성공했을때 어디로 갈지 지정 -->
+		<security:form-login default-target-url="/top.jsp" />
+		
+		<!-- logout은 security가 처리할때 default로 logout-url="/logout" 지정 -->
+		<security:logout logout-url="/logout" logout-success-url="/top.jsp" />
+		<security:csrf disabled="true" />
+	</security:http>
+	
+	
+	
+	<!-- component사용 안돼서 bean을 따로 등록 -->
+	<bean id="userDetailsService" class="com.yedam.web.user.service.impl.CustomUserDetailsService"></bean>
+	
+	<!-- 인증과 인가에 대해서 어떻게 처리할지 정의 -->
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="userDetailsService"> <!-- 빈으로 등록되어야함, 웹과 상관없이 동작하므로 component사용 --> 
+		
+			<!-- 1)방식: 인메모리 형태 -->
+<!-- 			<security:user-service> -->
+<!-- 				{noop}->암호화하지 않음을 알림. 이게 빠지면 암호화되지 않은 비밀번호로는 security에서 접근 불가하게함 => 개발할때만 사용. 일시적으로만 사용할 것. -->
+<!-- 				<security:user name="user" password="{noop}1234" authorities="ROLE_USER" /> -->
+<!-- 				<security:user name="admin" password="{noop}1234" authorities="ROLE_ADMIN" /> -->
+<!-- 			</security:user-service> -->
+			
+			
+			
+			<!-- 2)방식: DB에 연결하는 형태-->
+			<!-- 인증 후 => 권한 체크 / 한 유저가 복수의 권한을 가질 수 있으므로 거기에 대한 처리를 위해 나눠서 처리 -->
+			
+			<!-- DB자체를 다루는 건 dataSource -->
+			<!-- mybatis -> mapper가 가진 sql문을 실행 -> db를 다루는 기능에 도움을 주는 것 -->
+			
+<!-- 			<security:jdbc-user-service data-source-ref="dataSource" 		 -->
+<!-- 			users-by-username-query="select LOGIN_ID, '{noop}' || PASSWORD, 1 -->
+<!--  									 from T_USER -->
+<!-- 									 where LOGIN_ID = ?" -->
+<!-- 			authorities-by-username-query="select LOGIN_ID, ROLE_NAME -->
+<!--  										   from T_ROLE -->
+<!-- 										   	inner join T_USER_ROLE on T_ROLE.ID = T_USER_ROLE.ROLE_ID -->
+<!-- 										   	inner join T_USER on T_USER_ROLE.USER_ID = T_USER.ID -->
+<!-- 										   where LOGIN_ID = ?" />			 -->
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+</beans>
