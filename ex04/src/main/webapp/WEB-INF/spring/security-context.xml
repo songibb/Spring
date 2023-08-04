@@ -25,7 +25,8 @@
 		
 		<!-- logout은 security가 처리할때 default로 logout-url="/logout" 지정 -->
 		<security:logout logout-url="/logout" logout-success-url="/top.jsp" />
-		<security:csrf disabled="true" />
+		
+		<security:csrf disabled="false" />
 	</security:http>
 	
 	
