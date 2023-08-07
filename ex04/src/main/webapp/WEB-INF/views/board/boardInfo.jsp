@@ -60,5 +60,49 @@ table, th, td {
 			<button type="button" onclick="location.href='boardDelete?bno=${boardInfo.bno}'">삭제</button>
 		</form>
 	</div>
+	
+	<div id="grid"></div>
+	
+	<script>
+		window.onload = function(){
+			 $.ajax({
+			        url : "/deptList",
+			        method :"GET",
+			        dataType : "JSON",
+			        success : function(result){
+			            grid.resetData(result);
+			        } 
+			});
+		    var grid = new tui.Grid({
+		        el: document.getElementById('grid'),
+		        scrollX: false,
+		        scrollY: false,
+		        columns: [
+		          {
+		            header: 'boardNum',
+		            name: 'boardNum',
+		          },
+		          {
+		            header: 'spaceName',
+		            name: 'spaceName',
+		          },
+		          {
+		            header: 'Category',
+		            name: 'Category'
+		          },
+		          {
+		            header: 'price',
+		            name: 'price'
+		          },
+		          {
+		            header: 'regDate',
+		            name: 'regDate',
+		          }
+		        ]
+		      })
+		}
+		
+
+	</script>
 </body>
 </html>
