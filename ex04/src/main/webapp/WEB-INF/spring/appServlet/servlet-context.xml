@@ -9,11 +9,21 @@
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
+	<!-- spring servlet-context -> webcontainer  -->
+	<!-- 나머지-context -> rootcontainer	 -->
+	<!-- app.properties는 @controller안에서 작용 -> servlet-context에서 읽어 들여야 함 -->
+	<context:property-placeholder location="classpath:config/app.properties" />
+	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
+	
+	<!-- 로컬에 존재하는 파일을 업로할 때도 사용 -->
+	<!-- 외부이므로 file:이용 -->
+	<resources mapping="/images/**" location="${file.loading.path}"/>
+
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -36,6 +46,12 @@
 		class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
 		<beans:property name="order" value="1" />	
 	</beans:bean>
+	
+	
+	<!-- multipartResolver : 파일 업로드, 다운로드를 위해서 사용 / fetch 이용해서 formData 보낼때, server에서 처리시 필요 --> 	
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">	
+	</beans:bean>
+	
 	
 	<context:component-scan base-package="com.yedam.web" />
 </beans:beans>
