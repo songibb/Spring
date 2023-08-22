@@ -23,18 +23,31 @@
                var obj = {};
                
                var employee_id = td.eq(1).text();  
+               
                var name = td.eq(2).text();               
                var salary = Number(td.eq(3).text());               
-               var commission = Number(td.eq(4).text()); 
-               var bankAcct  = td.eq(6).text();
-			
+               //var commission = Number(td.eq(4).text());  
+               //text는 공백을 반환 할 수 있지만, 공백을 숫자로 변환할 수 없음
+               //따라서 조건을 달아서 공백을 0으로 처리해줘야함
+               var commission = td.eq(3).text();
+               if(commission == '')
+            	   commission = 0;
+               else
+            	   commission Number(commission);
+               
+               //var bankAcct  = td.eq(6).text();   ->  계좌는 input태그가 들어가야함     
+               var backAcct = td.eq(6).find('input').val();  
+               //input, textarea, selece 와 같은 입력 태그는 text()속성으로 데이터 못가져옴-> val()속성으로 접근
+
+               
+               //년월 구하기
                function getToday(){
             	    var date = new Date();
             	    var year = date.getFullYear();
             	    var month = ("0" + (1 + date.getMonth())).slice(-2);
-            	    var day = ("0" + date.getDate()).slice(-2);
+            	    //var day = ("0" + date.getDate()).slice(-2);
 
-            	    return year + month + day;
+            	    return year + month;
             	}
                var date = Number(getToday());
          
@@ -49,6 +62,7 @@
                obj["salDt"]  = date;               // 급여년월 (현재년월)
                obj["customer"]  = employee_id + '_' +name;   // 사번_이름
                obj["bankAcct"]  = bankAcct;      // 은행계좌
+               
                //목록에 담기
                list.push(obj);
 
@@ -60,13 +74,15 @@
 		   
 			//ajax 호출 
 			$.ajax({
-   				url : '../exam/insertSlipList',
+   				url : '../exam/insertSlipList',   //절대경로 사용시 http://localhost/exam/insertSlipList
    				type : 'POST',
    				contentType : 'application/json',
    				data : JSON.stringify(list)
    			})
    			.done(data => {
 				console.log(data);
+				let message = '총' + data.total + '/' + list.length + ' 건이 처리되었습니다.';
+				alert(message);
 			})
 			.fail(reject => console.log(reject));
 			

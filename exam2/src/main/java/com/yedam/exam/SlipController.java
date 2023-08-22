@@ -45,22 +45,24 @@ public class SlipController {
 	private SlipService slipService;
 	
 	// 비동기 통신을 처리하는 컨트롤러
+	
+	//내가 한 부분  
 //	@PostMapping("insertSlipList")
 //	@ResponseBody
-//	public Map<String, String> insertSlipList(@RequestBody Slip slip) {
-//		return slipService.insertSlip(slip);
-//		
-//	}
+//	public int insertSlipList(@RequestBody List<Slip> slip) {
+//		int result = 0;
+//		for(Slip s : slip) {
+//			result = slipService.insertSlip(s);
+//		}
+//		return result;
+//	};
 	
+	//컨트롤러는 중간역할 -> 코드가 많으면 안됨 -> 비즈니스로직은 serviceImpl에서 구현해야함 
 	@PostMapping("insertSlipList")
-	@ResponseBody
-	public int insertSlipList(@RequestBody List<Slip> slip) {
-		int result = 0;
-		for(Slip s : slip) {
-			result = slipService.insertSlip(s);
-		}
-		return result;
-	};
-	
+	@ResponseBody    //ajax 자체가 데이터를 돌려준다는 의미이므로 반드시 데이터가 return됨 -> @ResponseBody가 필요
+	public Map<String, Object> insertSlipList(@RequestBody List<Slip> slip) {   //ajax에서 json배열로 보내므로 배열로 받으니까 list로 받음
+		return slipService.insertSlip(slip);
+		
+	}
 	
 }
